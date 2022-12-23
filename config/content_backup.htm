@@ -458,7 +458,6 @@ var winkVideoData_w2_1 = {
 <div>
 <div>
 <div style="font-size: 14px;">
-<div>電腦輔助設計與實習 2b w9 考試時間, 從 2022.11.03 13:40-14:20, <a href="https://exam.cycu.org/" title="https://exam.cycu.org/">https://exam.cycu.org/</a>, 校外網段必須設定 140.130.17.4:3128 kmolab/kmolab 才能進入考試.</div>
 <div>電腦輔助設計與實習 2a w9 考試時間, 從 2022.11.04 13:40-14:20, <a href="https://exam.cycu.org/" title="https://exam.cycu.org/">https://exam.cycu.org/</a>, 校外網段必須設定 140.130.17.4:3128 kmolab/kmolab 才能進入考試.</div>
 </div>
 </div>
@@ -467,9 +466,61 @@ var winkVideoData_w2_1 = {
 </div>
 </div>
 </div>
-<div>&lt;https://teams.microsoft.com/l/message/19:ca2954ba16f9419c8e9c41fcb1817c63@thread.tacv2/1667357668798?tenantId=e650a2d7-e923-45bb-8fa6-1af5b0f72f09&amp;amp;groupId=3eda9b91-6227-4479-9f15-5541882d4a94&amp;amp;parentMessageId=1667357668798&amp;amp;teamName=cad2022&amp;amp;channelName=w8-w9&amp;amp;createdTime=1667357668798&amp;amp;allowXTenantAccess=false&gt;</div>
 </div><h2>W10</h2>
-<h2>W11</h2>
+<p>上課內容:</p>
+<div>
+<div style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><span></span>
+<div>w10 HW2 web based NX</div>
+<div data-tid="messageBodyContainer">
+<div data-tid="messageBodyContent">
+<div>
+<div>
+<div>
+<div>
+<div>已知 <a href="https://nfuedu.sharepoint.com/:u:/s/cad2022/EQTYcGymLWhJkYvzj94FNowBUzVx9Qaxn7nbtvZkdE1CUg?e=DJat7E" title="https://nfuedu.sharepoint.com/:u:/s/cad2022/eqtycgymlwhjkyvzj94fnowbuzvx9qaxn7nbtvzkde1cug?e=djat7e">block.prt</a> 中 p8=59, p9=44, 請利用網際表單, 將 p8, p9 都改為 50 之後, 在瀏覽中提供新的 block_new.prt 檔案下載, 並直接在網頁上展示該零件的 STL 格式檔案.</div>
+<div>範例程式:</div>
+<div>
+<div>from flask import Flask, request</div>
+<div>
+<div>
+<div># for NX2027 import NXOpen import NXOpen.UF import NXOpen.Gateway</div>
+<div>
+<div>
+<div>app = Flask(__name__)</div>
+<div>
+<div>
+<div>@app.route('/') def index():     return '''     &lt;form action="/action" method="post"&gt;     a: &lt;input type="text" name="a" size="10"&gt;&lt;br /&gt;     b: &lt;input type="text" name="b" size="10"&gt;&lt;br /&gt;     &lt;input type="submit" value="send"&gt;     &lt;/form&gt;     '''</div>
+<div>
+<div>
+<div>@app.route('/action', methods=['POST']) def action():     a = request.form['a']     b = request.form['b']     return "a: " + a +", " + "b: " + b</div>
+<div>
+<div>
+<div>@app.route('/nxopen') def nxopen():     # 取得目前開啟的工作階段     theSession = NXOpen.Session.GetSession()     theUfSession = NXOpen.UF.UFSession.GetUFSession()            # 建立 ListingWindow     listWin= theSession.ListingWindow     # 開啟零件檔案     basePart1 = theSession.Parts.OpenBaseDisplay("block.prt")     workPart = theSession.Parts.Work     unit1 = workPart.UnitCollection.FindObject("MilliMeter")     # height     p7 = workPart.Expressions.FindObject("p7")     # width     p8 = workPart.Expressions.FindObject("p8")     # length     p9 = workPart.Expressions.FindObject("p9")     workPart.Expressions.EditWithUnits(p7, unit1, "30")     workPart.Expressions.EditWithUnits(p8, unit1, "60")     workPart.Expressions.EditWithUnits(p9, unit1, "90")     theSession.UpdateManager.DoUpdate(0)     try:         saveStatus1 = workPart.SaveAs("block_new.prt")         saveStatus1.Dispose()     except:         pass     # initialize list to hold bodies     theBodyTags = []         for x in workPart.Bodies:         if x.IsSolidBody:             theBodyTags.append(x.Tag)            # 準備輸出 ASCII 格式 STL 零件檔案     sTLCreator1 = theSession.DexManager.CreateStlCreator()     sTLCreator1.AutoNormalGen = True     sTLCreator1.ChordalTol = 0.08     sTLCreator1.AdjacencyTol = 0.08     sTLCreator1.OutputFile = "block_ascii.stl"     # Binary STL: NXOpen.STLCreatorOutputTypeEnum.Binary     sTLCreator1.OutputType = NXOpen.STLCreatorOutputTypeEnum.Text     # 已知 body1 命名     body1 = workPart.Bodies.FindObject("EXTRUDE(2)")     added1 = sTLCreator1.ExportSelectionBlock.Add(body1)     nXObject1 = sTLCreator1.Commit()     sTLCreator1.Destroy()        # 開啟所建立的 ListingWindow     listWin.Open()     listWin.WriteLine("number of solid bodies: " + str(len(theBodyTags)))         (massProps, Stats) = theUfSession.Modeling.AskMassProps3d(theBodyTags, len(theBodyTags), 1, 4, .03, 1, [0.99,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0])     listWin.WriteLine("units: kg, mm")     listWin.WriteLine("surface area: " + str(massProps[0]))     listWin.WriteLine("volume: " + str(massProps[1]*1E9))     # 在 ListingWindow 中寫入字串     listWin.WriteLine("Hello, NXOpen")     listWin.Close()          return "mass: " + str(massProps[0])</div>
+<div>
+<div>
+<div># app.run(host=ip, port=port, debug=True, ssl_context="adhoc") app.run(port=8123)  </div>
+<div>範例檔案: <a href="https://nfuedu.sharepoint.com/:u:/s/cad2022/EfNdHIWdVTBHld5yh6JmFTMBiowyiNNlcfFsP8PqvUN6mw?e=jxxZdb" title="https://nfuedu.sharepoint.com/:u:/s/cad2022/efndhiwdvtbhld5yh6jmftmbiowyinnlcffsp8pqvun6mw?e=jxxzdb">w10_cad2022_solvespace_ex.7z</a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><h2>W11</h2>
 <h2>W12</h2>
 <h2>W13</h2>
 <h2>W14</h2>
