@@ -521,7 +521,148 @@ var winkVideoData_w2_1 = {
 </div>
 </div>
 </div><h2>W11</h2>
-<h2>W12</h2>
+<div>
+<div style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><span></span>
+<div>建立 TCExam 題庫</div>
+<div data-tid="messageBodyContainer">
+<div data-tid="messageBodyContent">
+<div>
+<div>
+<div>
+<div style="font-size: 14px;">
+<div>各分組如何建立 TCExam 線上考試系統的題庫?</div>
+<ol>
+<li>啟動可攜 Python 程式系統後, 在命令列中輸入 leo, 開啟 Leo Editor.</li>
+<li>下載 <a href="https://github.com/mdecycu/mdecycu.github.io/blob/main/downloads/xml/tcexam_network_setting_cadlab.leo" title="https://github.com/mdecycu/mdecycu.github.io/blob/main/downloads/xml/tcexam_network_setting_cadlab.leo">tcexam_network_setting_cadlab.leo</a>, 以 Leo Editor 開啟.</li>
+<li>了解如何使用 Leo Editor.</li>
+<li>各組組員根據下列規劃出題:</li>
+</ol>
+<div>題庫建立時間 - header 標註:</div>
+<div><span itemid="93a9c6c125cc4f73b8f77340494c9d63" itemtype="http://schema.skype.com/InputExtension"><code-snippet-card>
+<div itemtype="http://schema.skype.com/CodeSnippet">
+<div>
+<div>
+<h4>XML</h4>
+</div>
+<div>
+<pre><code><span>&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+</span><span>&lt;tcexamquestions version="14.8.5
+</span><span>"&gt;
+</span><span>&lt;header lang="en" date="2022-11-10 14:02:11"&gt;&lt;/header&gt;
+</span><span>@others
+</span><span>&lt;/tcexamquestions&gt;
+</span><span>@language xml
+</span><span>@tabwidth -4</span></code></pre>
+</div>
+</div>
+</div>
+</code-snippet-card></span>
+<div style="font-size: 14px;">
+<div>根據命題時間, 修改上列 header 內容.</div>
+<div>接下來修改題庫模組名稱 - module -name:</div>
+<div><span itemid="45ceec5a25884754a57d06044752326d" itemtype="http://schema.skype.com/InputExtension"><code-snippet-card>
+<div itemtype="http://schema.skype.com/CodeSnippet">
+<div>
+<div>
+<h4>XML</h4>
+</div>
+<div>
+<pre><code><span>&lt;module&gt;
+</span><span>    &lt;name&gt;network_setting&lt;/name&gt;
+</span><span>    &lt;enabled&gt;true&lt;/enabled&gt;
+</span><span>    @others
+</span><span>&lt;/module&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</code-snippet-card></span>
+<div style="font-size: 14px;">
+<div>module 內的 name 請改為 cp2022_ag1_w12, 表示該題目模組名稱為 cp2022 課程 a 班第一組在 w12 週所建立的題庫.</div>
+<div>接下來, 修改有關題庫主題 - subject - name:</div>
+<div><span itemid="3f6da1f0e0114360a9e1aabfa9fcdca2" itemtype="http://schema.skype.com/InputExtension"><code-snippet-card>
+<div itemtype="http://schema.skype.com/CodeSnippet">
+<div>
+<div>
+<h4>XML</h4>
+</div>
+<div>
+<pre><code><span>&lt;subject&gt;
+</span><span>&lt;name&gt;cadlab&lt;/name&gt;
+</span><span>&lt;description&gt;有關電腦輔助設計室網路相關設定&lt;/description&gt;
+</span><span>&lt;enabled&gt;true&lt;/enabled&gt;
+</span><span>@others
+</span><span>&lt;/subject&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</code-snippet-card></span>
+<div style="font-size: 14px;">
+<div>subject 標註下的 name 表示該題庫的主題, 請將 subject 下的 name 標註內容改為 w12. 並在其下的 description 標註說明此題庫的相關測驗內容.</div>
+<div>接下來則開始建立試題:</div>
+<div><span itemid="ef430c832a1540e2845a415c4979f8d0" itemtype="http://schema.skype.com/InputExtension"><code-snippet-card>
+<div itemtype="http://schema.skype.com/CodeSnippet">
+<div>
+<div>
+<h4>XML</h4>
+</div>
+<div>
+<pre><code><span>&lt;question&gt;
+</span><span>&lt;enabled&gt;true&lt;/enabled&gt;
+</span><span>&lt;type&gt;multiple&lt;/type&gt;
+</span><span>&lt;difficulty&gt;1&lt;/difficulty&gt;
+</span><span>&lt;position&gt;&lt;/position&gt;
+</span><span>&lt;timer&gt;0&lt;/timer&gt;
+</span><span>&lt;fullscreen&gt;false&lt;/fullscreen&gt;
+</span><span>&lt;inline_answers&gt;false&lt;/inline_answers&gt;
+</span><span>&lt;auto_next&gt;false&lt;/auto_next&gt;
+</span><span>&lt;description&gt;請根據機械設計工程系綜一館八樓的電腦輔助設計室電腦與網路相關設定, 選出下列正確的敘述.&lt;/description&gt;
+</span><span>&lt;explanation&gt;在電腦輔助設計室上課時, 將網路線直接連接到系主幹, 在正常情況下, 可以得到最大的連外頻寬.&lt;/explanation&gt;
+</span><span>@others
+</span><span>&lt;/question&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</code-snippet-card></span>
+<div style="font-size: 14px;">
+<div>question 標註中, 出題者僅需要將複選題的說明文字放入 description 標註中.</div>
+<div>最後, 出題者需要提供 8-12 個選項, 其中必須 true 與 false 選項各半.</div>
+<div>題目選項 - answer - isright - description:</div>
+<div><span itemid="3fff0c41a44045ecb8237924e94fba69" itemtype="http://schema.skype.com/InputExtension"><code-snippet-card>
+<div itemtype="http://schema.skype.com/CodeSnippet">
+<div>
+<div>
+<h4>XML</h4>
+</div>
+<div>
+<pre><code><span>&lt;answer&gt;
+</span><span>    &lt;enabled&gt;true&lt;/enabled&gt;
+</span><span>    &lt;isright&gt;true&lt;/isright&gt;
+</span><span>    &lt;position&gt;&lt;/position&gt;
+</span><span>    &lt;keyboard_key&gt;&lt;/keyboard_key&gt;
+</span><span>    &lt;description&gt;上課時段之所以只選用 IPv6 網路協定, 是為了取得對外網路連線最大頻寬.&lt;/description&gt;
+</span><span>    &lt;explanation&gt;&lt;/explanation&gt;
+</span><span>&lt;/answer&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</code-snippet-card></span>若 isright 標註中為 true 表示該 description 選項敘述正確, 若 isright 標註中為 false, 則表示該 description 選項敘述錯誤.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div></div>
+</div><h2>W12</h2>
 <h2>W13</h2>
 <h2>W14</h2>
 <h2>W15</h2>
